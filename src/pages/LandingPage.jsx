@@ -14,11 +14,15 @@ function LandingPage() {
   const [loading, setLoading] = useState(false)
   const [searchParams, setSearchParams] = useState({})
   const [modalCapsule, setModalCapsule] = useState(null)
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    limit: 7,
+  })
 
   useEffect(() => {
     loadCapsules()
     // eslint-disable-next-line
-  }, [searchParams])
+  }, [searchParams, pagination.currentPage])
 
   async function loadCapsules() {
     setLoading(true)
@@ -31,7 +35,9 @@ function LandingPage() {
 
     try {
       const resp = await fetch(
-        `https://api.spacexdata.com/v3/capsules?${searchString}`
+        `https://api.spacexdata.com/v3/capsules?order=asc&offset=${
+          (pagination.currentPage - 1) * pagination.limit
+        }&limit=${pagination.limit}&${searchString}`
       )
       if (resp.ok) {
         const sules = await resp.json()
@@ -46,6 +52,18 @@ function LandingPage() {
       alert('Error Loading Data')
     }
     // setLoading(false)
+  }
+
+  function nextPage() {
+    setPagination(p => ({ ...p, currentPage: p.currentPage + 1 }))
+  }
+
+  function prevPage() {
+    if (pagination.currentPage > 0) {
+      setPagination(p => ({ ...p, currentPage: p.currentPage - 1 }))
+    } else {
+      alert('This is the first Page')
+    }
   }
 
   function showModal(capsule) {
@@ -69,7 +87,12 @@ function LandingPage() {
           <span>Loading Capsules</span>
         </div>
       ) : (
-        <Grid capsules={capsules} openCapsuleModal={c => showModal(c)} />
+        <Grid
+          capsules={capsules}
+          openCapsuleModal={c => showModal(c)}
+          nextPage={nextPage}
+          prevPage={prevPage}
+        />
       )}
     </div>
   )
