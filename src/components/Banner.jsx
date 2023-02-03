@@ -8,7 +8,7 @@ import {
   faLinkedin,
 } from '@fortawesome/free-brands-svg-icons'
 
-function Banner() {
+function Banner({ capsules }) {
   return (
     <div className="banner">
       <div className="text">
@@ -30,16 +30,24 @@ function Banner() {
         </div>
         <div className="stats">
           <div className="stat">
-            <div className="main">+32k</div>
-            <div className="desc">Users</div>
+            <div className="main">{capsules.length}</div>
+            <div className="desc">Capsules</div>
           </div>
           <div className="stat">
-            <div className="main">+8k</div>
-            <div className="desc">Ideas</div>
+            <div className="main">
+              {capsules.reduce((total, cur) => {
+                return total + cur.missions.length
+              }, 0)}
+            </div>
+            <div className="desc">Missions</div>
           </div>
           <div className="stat">
-            <div className="main">+2k</div>
-            <div className="desc">Customers</div>
+            <div className="main">
+              {capsules.reduce((total, cur) => {
+                return total + cur.landings
+              }, 0)}
+            </div>
+            <div className="desc">Landings</div>
           </div>
         </div>
       </div>
