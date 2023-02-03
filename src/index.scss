@@ -260,6 +260,59 @@ body {
   z-index: 99;
   border-radius: 5px;
   box-shadow: $black 0 0 50px;
+  min-width: 320px;
+
+  .title {
+    font-family: b;
+    font-size: 18px;
+    position: relative;
+
+    .badge {
+      background: $purple;
+      color: $white;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 50%;
+    }
+  }
+
+  table {
+    margin: 5px 0;
+    width: 100%;
+    thead {
+      background: $black;
+      color: white;
+      th {
+        text-align: start;
+        padding: 2px 5px;
+      }
+    }
+    tbody {
+      tr {
+        td {
+          padding: 2px 5px;
+        }
+
+        &:nth-child(even) {
+          background: transparentize($black, 0.8);
+        }
+      }
+    }
+  }
+
+  button {
+    background: $purple;
+    border: none;
+    font-size: 16px;
+    color: white;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .no-mission {
+    color: $purple;
+  }
 }
 
 @media only screen and (max-width: 600px) {
